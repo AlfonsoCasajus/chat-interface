@@ -1,7 +1,7 @@
 <template>
 	<nav class="w-full flex justify-between items-center px-4 py-2 bg-white dark:bg-gray-800 shadow-md">
 		<div class="rounded-sm dark:invert dark:grayscale">
-			<img width="100px" src="../../../public/growlat_logo.svg" alt="Growlat logo">
+			<img width="100px" src="/growlat_logo.svg" alt="Growlat logo">
 		</div>
 
 		<button @click="toggleDarkMode" class="cursor-pointer bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 p-2 rounded-full">

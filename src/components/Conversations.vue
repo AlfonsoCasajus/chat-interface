@@ -1,5 +1,20 @@
 <template>
-	<div>
+	<div class="overflow-auto w-max border-r">
+	  <ConversationPreview />
+	  <ConversationPreview />
+	  <ConversationPreview />
+	  <ConversationPreview />
+	  <ConversationPreview />
+	  <ConversationPreview />
+	  <ConversationPreview />
+	  <ConversationPreview />
+	  <ConversationPreview />
+	  <ConversationPreview />
+	  <ConversationPreview />
+	  <ConversationPreview />
+	  <ConversationPreview />
+	  <ConversationPreview />
+	  <ConversationPreview />
 	  <ConversationPreview />
 	  <ConversationPreview />
 	  <ConversationPreview />

@@ -1,5 +1,5 @@
 <template>
-	<nav class="w-full flex justify-between items-center px-4 py-2 bg-white dark:bg-gray-800 shadow-md">
+	<nav class="z-10 w-full flex justify-between items-center px-4 py-2 bg-white dark:bg-gray-800 shadow-md">
 		<div class="rounded-sm dark:invert dark:grayscale">
 			<img width="100px" src="/growlat_logo.svg" alt="Growlat logo">
 		</div>

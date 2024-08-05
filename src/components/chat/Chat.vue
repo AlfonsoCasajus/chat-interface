@@ -1,5 +1,5 @@
 <template>
-  <div class="w-2/3 p-4 messages-wrapper">
+  <div class="h-full p-4 messages-wrapper">
     <Message message="Mensaje" time="20:00" />
     <Message message="Mensaje" time="20:00" />
     <Message message="Mensaje" time="20:00" />

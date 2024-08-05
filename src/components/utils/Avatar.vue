@@ -1,5 +1,6 @@
 <template>
-	<div :class="[
+  <img v-if="imageUrl" :class="['rounded-full', sizeClasses]" :src="imageUrl" alt="Customer Avatar">
+	<div v-else :class="[
       'flex items-center justify-center rounded-full text-white bg-blue-500',
       sizeClasses
     ]">
@@ -19,6 +20,10 @@
     size: {
       type: String,
       default: 'medium',
+    },
+    imageUrl: {
+      type: String,
+      default: '',
     },
   })
 

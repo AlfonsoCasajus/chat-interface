@@ -1,15 +1,18 @@
 import axios from 'axios';
 
+const sectors = ['Devolución', 'Consulta', 'Asistencia', 'General']
+const agents = ['Alfonso', 'Nicolás', 'Lucia', 'Adrian']
+
 const conversations = {
 	namespaced: true,
 	state: () => ({
-		conversations: [],
+		customers: [],
 		selectedConversation: null,
 		loading: false
 	}),
 	mutations: {
-		addConversations(state, newConversations) {
-			state.conversations.unshift(...newConversations);
+		addCustomers(state, newCustomers) {
+			state.customers.unshift(...newCustomers);
 		},
 		setLoading(state, loading) {
 			state.loading = loading;
@@ -20,7 +23,7 @@ const conversations = {
 		
 	},
 	actions: {
-		async fetchConversations({ commit }) {
+		async fetchCustomers({ commit }) {
 			const BASE_URL = import.meta.env.VITE_GROWLAT_BASE_URL;
 			const AUTH = import.meta.env.VITE_GROWLAT_AUTH;
 
@@ -32,17 +35,27 @@ const conversations = {
 					}
 				  });
 
-				  const conversations = response.data.data;
-				  commit('addConversations', conversations);
+				  const customers = response.data.data;
+				  commit('addCustomers', customers);
 
 			} catch (error) {
-				console.error('Error al buscar las conversaciones: ', error);
+				console.error('Error al buscar customers: ', error);
 			}
 			commit('setLoading', false)
 		}
 	},
 	getters: {
-		conversations: (state) => state.conversations,
+		conversations: (state) => {
+			return state.customers.map(customer => {
+				return {
+					customer,
+					sector: sectors[Math.floor(Math.random() * sectors.length - 1) + 1],
+					agent: agents[Math.floor(Math.random() * (agents.length - 1)) + 1],
+					lastMessage: 'Último mensaje enviado por uno de los',
+					lastMessageTime: 'Hace 10 minutos'
+				}
+			})
+		},
 		selectedConversation: (state) => state.selectedConversation,
 		isLoading: (state) => state.loading
 	}

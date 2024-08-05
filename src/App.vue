@@ -11,11 +11,11 @@ import CustomerDetail from './components/ConversationDetail.vue';
 const store = useStore()
 
 onMounted(() => {
-  fetchConversations();
+  fetchCustomers();
 })
 
-const fetchConversations = () => {
-  store.dispatch('conversations/fetchConversations');
+const fetchCustomers = () => {
+  store.dispatch('conversations/fetchCustomers');
 }
 
 const conversations = computed(() => store.getters['conversations/conversations']);
@@ -31,7 +31,7 @@ const selectConversation = (conversation) => {
   <div class="light h-screen flex flex-col">
     <NavBar />
     <div class="h-1 flex justify-between flex-grow">
-      <span class="w-2/4 overflow-y-auto h-full">
+      <span class="min-w-[400px] w-1/4 overflow-y-auto h-full">
         <Conversations :conversations="conversations" @select="selectConversation" />
       </span>
       <span class="h-full w-full">

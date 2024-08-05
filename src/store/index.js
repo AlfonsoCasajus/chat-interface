@@ -1,9 +1,9 @@
 import { createStore } from "vuex"
-import customers from "./modules/customers";
+import conversations from "./modules/conversations";
 
 const store = createStore({
 	modules: {
-		customers
+		conversations
 	}
 })
 

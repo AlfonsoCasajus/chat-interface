@@ -6,14 +6,15 @@ import { computed } from 'vue';
 import Conversations from './components/Conversations.vue';
 import Chat from './components/chat/Chat.vue';
 import NavBar from './components/navigation/NavBar.vue';
+import CustomerDetail from './components/CustomerDetail.vue';
 
 const store = useStore()
 
-const fetchConversations = () => {
+const fetchCustomers = () => {
   store.dispatch('conversations/fetchConversations');
 }
 
-const conversations = computed(() => store.getters['conversations/conversations']);
+const customers = computed(() => store.getters['customers/customers']);
 
 </script>
 
@@ -21,10 +22,9 @@ const conversations = computed(() => store.getters['conversations/conversations'
   <div class="light h-screen flex flex-col">
     <NavBar />
     <div class="h-1 flex flex-grow">
-
       <Conversations  />
       <Chat />
-      <div>USER DATA</div>
+      <CustomerDetail />
     </div>
   </div>
 </template>

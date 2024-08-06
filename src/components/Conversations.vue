@@ -1,22 +1,27 @@
 <template>
 	<div>
+      <!-- Filter Start -->
     <div class="p-2 mt-2 mb-2">
       <Input type="text" v-model="filterQuery" placeholder="Nombre del cliente..." :input-delay="300" />
     </div>
-    <div v-if="hasError" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+    <!-- Filter End -->
+    <!-- Error template Start -->
+    <div v-if="hasError" class="m-2 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
       <strong class="font-bold">Error</strong>
+      <br>
       <span class="block sm:inline">Hubo un problema al buscar las conversaciones</span>
-      <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
-        <IconX size="26" />
-      </span>
     </div>
+    <!-- Error template End -->
+    <!-- List of conversations Start -->
     <div v-if="!isLoadingConversations">
       <ConversationPreview v-for="(conversation, index) of filteredConversations"
-        :key="index"
-        :conversation="conversation"
-        @click="$emit('select', conversation)"
+      :key="index"
+      :conversation="conversation"
+      @click="$emit('select', conversation)"
       />
     </div>
+    <!-- List of conversations End-->
+    <!-- Skeleton template Start-->
     <div v-else>
       <div v-for="skeleton of 5" class="border shadow rounded-md p-4 w-full">
         <div class="animate-pulse flex space-x-4">
@@ -34,6 +39,7 @@
         </div>
       </div>
     </div>
+    <!-- Skeleton template End-->
 	</div>
   </template>
   
@@ -42,8 +48,6 @@ import { ref, computed } from 'vue';
 import { useStore } from 'vuex';
 import ConversationPreview from './ConversationPreview.vue';
 import Input from './utils/Input.vue';
-import { IconX } from '@tabler/icons-vue';
-
 
 const props = defineProps({
   conversations: {
@@ -64,7 +68,6 @@ const hasError = computed(() => {
 const isLoadingConversations = computed(() => {
 	return store.getters['conversations/isLoading'];
 })
-
 
 const filterQuery = ref('')
 const filteredConversations = computed(() => {

@@ -1,6 +1,6 @@
 <template>
 	<div :class="['flex', { 'flex-row-reverse': isAgentSender }]">
-		<Avatar name="Alfonso" size="small" :class="['mr-1 ml-1', { 'opacity-0': lastSender === sender}]" />
+		<Avatar :image-url="sender.photo" :name="sender.name" size="small" :class="['mr-1 ml-1', { 'opacity-0': !showAvatar}]" />
 		<div :class="[`
 			flex
 			flex-col
@@ -41,18 +41,18 @@ const props = defineProps({
 	  required: true
 	},
 	sender: {
-	  type: String,
+	  type: Object,
 	  required: true
 	},
-	lastSender: {
-	  type: String,
+	showAvatar: {
+	  type: Boolean,
 	  required: false,
-	  default: ''
+	  default: true
 	},
 })
 
 const isAgentSender = computed(() => {
-	return props.sender === 'agent';
+	return props.sender.type === 'agent';
 })
 
 </script>

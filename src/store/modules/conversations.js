@@ -17,6 +17,9 @@ const conversations = {
 		setLoading(state, loading) {
 			state.loading = loading;
 		},
+		setError(state, error) {
+			state.error = error;
+		},
 		selectConversation(state, conversation) {
 			state.selectedConversation = conversation;
 		}
@@ -40,19 +43,43 @@ const conversations = {
 
 			} catch (error) {
 				console.error('Error al buscar customers: ', error);
-				state.error = true;
+				commit('setError', true)
 			}
 			commit('setLoading', false)
 		}
 	},
 	getters: {
 		conversations: (state) => {
+			if (!state?.customers?.length) return [];
 			return state.customers.map(customer => {
-				const conversation = conversationsExamples[Math.floor(Math.random() * 3) + 1];
+				// There are 3 hardcoded conversations
+				const conversationIndex = Math.floor(Math.random() * 3);
 
+				// Set one of the hardcoded conversations
+				const conversation = conversationsExamples[conversationIndex];
+ 
 				return {
+					// Conversation example
+					// uuid: '87171f25-cd92-41f5-9eb9-bd693d2e74a6',
+					// sector: 'Devolución',
+					// agent: 'Alfonso',
+
 					...conversation,
 					customer,
+					// Set customer data as sender of the conversation messages
+					messages: conversation.messages.map(message => {
+						if (message.sender.type === 'agent') return message;
+
+						return {
+							//  Message example
+							// 	sender: { name: 'Nicolás', type: 'agent' },
+							// 	message: "¡Hola! ¿En qué puedo ayudarte hoy?",
+							// 	time: "09:00"
+							...message,
+							sender: { ...customer }
+
+						}
+					})
 				}
 			})
 		},

@@ -7,7 +7,8 @@ const conversations = {
 	state: () => ({
 		customers: [],
 		selectedConversation: null,
-		loading: false
+		loading: false,
+		error: false
 	}),
 	mutations: {
 		addCustomers(state, newCustomers) {
@@ -39,6 +40,7 @@ const conversations = {
 
 			} catch (error) {
 				console.error('Error al buscar customers: ', error);
+				state.error = true;
 			}
 			commit('setLoading', false)
 		}
@@ -55,7 +57,8 @@ const conversations = {
 			})
 		},
 		selectedConversation: (state) => state.selectedConversation,
-		isLoading: (state) => state.loading
+		isLoading: (state) => state.loading,
+		error: (state) => state.error
 	}
 }
 

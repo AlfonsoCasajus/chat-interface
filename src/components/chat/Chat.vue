@@ -10,6 +10,7 @@
         :message="messageData.message"
         :sender="messageData.sender"
         :time="messageData.time"
+        :last-sender="conversation?.messages[index - 1]?.sender"
       />
     </div>
     <MessageInput v-if="conversation" class="mt-2" :model-value="chatInput" />

@@ -1,30 +1,35 @@
 <template>
-  <div class="h-full flex flex-col p-4 messages-wrapper">
-    <div class="h-full overflow-auto">
-      <Message v-for="(messageData, index) of messages" :key="index"
+  <div class="h-full flex flex-col messages-wrapper">
+    <div v-if="conversation" class="bg-white p-2 mb-2 dark:bg-gray-800 border-b-2">
+      <slot name="top-toolbar" />
+    </div>
+    <div class="h-full overflow-auto p-4">
+      <Message v-for="(messageData, index) of conversation ? conversation.messages : []"
         class="mb-1"
+        :key="index"
         :message="messageData.message"
         :sender="messageData.sender"
         :time="messageData.time"
       />
     </div>
-    <MessageInput class="mt-2" :model-value="chatInput" />
+    <MessageInput v-if="conversation" class="mt-2" :model-value="chatInput" />
 	</div>
   </template>
   
   <script setup>
   import { ref } from "vue"
-import Message from './Message.vue';
-import MessageInput from "./MessageInput.vue";
+  import Message from './Message.vue';
+  import MessageInput from "./MessageInput.vue";
 
+
+  const props = defineProps({
+    conversation: {
+      type: Array,
+      default: () => []
+    }
+  })
+  
 const chatInput = ref('')
-
-const props = defineProps({
-	messages: {
-	  type: Array,
-	  default: () => []
-	}
-})
 
 </script>
 

@@ -30,12 +30,28 @@ const selectConversation = (conversation) => {
 <template>
   <div class="light h-screen flex flex-col">
     <NavBar />
-    <div class="h-1 flex justify-between flex-grow">
-      <span class="min-w-[400px] w-1/4 overflow-y-auto h-full dark:bg-gray-800">
+    <div class="h-1 flex justify-between flex-grow max-lg:flex-col">
+      <span :class="['min-w-[400px] max-lg:w-full w-1/4 overflow-y-auto h-full dark:bg-gray-800', { 'max-lg:hidden': selectedConversation }]">
         <Conversations :conversations="conversations" @select="selectConversation" />
       </span>
-      <span class="h-full w-full">
-        <Chat :messages="selectedConversation?.messages ? selectedConversation?.messages : [] " />
+      <span :class="['h-full w-full', { 'max-lg:hidden': !selectedConversation }]">
+        <Chat :conversation="selectedConversation">
+          <template #top-toolbar>
+            <div class="flex justify-between">
+              <button
+                class="px-4 py-2 bg-gray-200 rounded-md focus:outline-none" 
+                @click="() => selectConversation(null)" 
+                aria-label="Volver a la conversación anterior" 
+                title="Atras"
+              >
+                Atras
+              </button>
+              <button class="px-4 py-2 bg-gray-200 rounded-md focus:outline-none">
+                Customer
+              </button>
+            </div>
+          </template>
+        </Chat>
       </span>
       <span v-if="selectedConversation" class="w-1/6 h-full">
         <CustomerDetail :conversation="selectedConversation" />

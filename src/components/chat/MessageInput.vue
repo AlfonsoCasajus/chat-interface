@@ -1,6 +1,6 @@
 <template>
-	<div class="flex items-center p-2 bg-white">
-	  <Input type="text" :model-value="chatInput" placeholder="Escribe un mensaje..." :input-delay="100"/>
+	<div class="flex items-center p-2 bg-white dark:bg-gray-800 border-t-2">
+	  <Input type="text" :model-value="chatInput" placeholder="Escribe un mensaje..." />
 	  <button @click="addFile" class="ml-2 px-4 py-2 text-white bg-blue-500 hover:bg-blue-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
 		📎
 	  </button>

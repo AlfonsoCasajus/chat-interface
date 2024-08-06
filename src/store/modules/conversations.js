@@ -5,14 +5,18 @@ import conversationsExamples from '../../conversationsExamples';
 const conversations = {
 	namespaced: true,
 	state: () => ({
-		customers: [],
+		conversations: [],
 		selectedConversation: null,
 		loading: false,
 		error: false
 	}),
 	mutations: {
-		addCustomers(state, newCustomers) {
-			state.customers.unshift(...newCustomers);
+		selectConversation(state, conversation) {
+			state.selectedConversation = conversation;
+		},
+		setConversations(state, conversations) {
+			if (!Array.isArray(conversations)) state.conversations = [];
+			else state.conversations = conversations
 		},
 		setLoading(state, loading) {
 			state.loading = loading;
@@ -20,10 +24,6 @@ const conversations = {
 		setError(state, error) {
 			state.error = error;
 		},
-		selectConversation(state, conversation) {
-			state.selectedConversation = conversation;
-		}
-		
 	},
 	actions: {
 		async fetchCustomers({ commit }) {
@@ -39,50 +39,66 @@ const conversations = {
 				  });
 
 				  const customers = response.data.data;
-				  commit('addCustomers', customers);
+
+				  const conversations = customers.map((customer, index) => {
+					// There are 3 hardcoded conversations
+					const conversationIndex = Math.floor(Math.random() * 3);
+	
+					// Set one of the hardcoded conversations
+					const conversation = conversationsExamples[conversationIndex];
+	 
+					return {
+						uuid: `550e8400-e29b-1d4-a716-${index}4665544000`,
+						// Conversation example
+						// sector: 'Devolución',
+						// agent: 'Alfonso Casajus',
+						...conversation,
+						customer,
+						// Set customer data as sender of the conversation messages
+						messages: conversation.messages.map(message => {
+							if (message.sender.type === 'agent') return message;
+	
+							return {
+								//  Message example
+								// 	sender: { name: 'Nicolás', type: 'agent' },
+								// 	message: "¡Hola! ¿En qué puedo ayudarte hoy?",
+								// 	time: "09:00"
+								...message,
+								sender: { ...customer }
+	
+							}
+						})
+					}})
+				  
+				  commit('setConversations', conversations);
 
 			} catch (error) {
 				console.error('Error al buscar customers: ', error);
 				commit('setError', true)
 			}
 			commit('setLoading', false)
+		},
+		async updateConversation({ commit, state }, { uuid, message }) {
+			const conversations = [...state.conversations];
+			const conversation = conversations.find(conversation => conversation.uuid === uuid);
+
+			const date = new Date();
+			const hours = String(date.getHours()).padStart(2, '0');
+			const minutes = String(date.getMinutes()).padStart(2, '0');
+			const formattedTime = `${hours}:${minutes}`;
+
+			conversation.messages.push({
+				sender: { name: 'Alfonso Casajus', type: 'agent' },
+				message,
+				time: formattedTime
+			})
+			
+			commit('setConversations', conversations);
+
 		}
 	},
 	getters: {
-		conversations: (state) => {
-			if (!state?.customers?.length) return [];
-			return state.customers.map(customer => {
-				// There are 3 hardcoded conversations
-				const conversationIndex = Math.floor(Math.random() * 3);
-
-				// Set one of the hardcoded conversations
-				const conversation = conversationsExamples[conversationIndex];
- 
-				return {
-					// Conversation example
-					// uuid: '87171f25-cd92-41f5-9eb9-bd693d2e74a6',
-					// sector: 'Devolución',
-					// agent: 'Alfonso',
-
-					...conversation,
-					customer,
-					// Set customer data as sender of the conversation messages
-					messages: conversation.messages.map(message => {
-						if (message.sender.type === 'agent') return message;
-
-						return {
-							//  Message example
-							// 	sender: { name: 'Nicolás', type: 'agent' },
-							// 	message: "¡Hola! ¿En qué puedo ayudarte hoy?",
-							// 	time: "09:00"
-							...message,
-							sender: { ...customer }
-
-						}
-					})
-				}
-			})
-		},
+		conversations: (state) => state.conversations,
 		selectedConversation: (state) => state.selectedConversation,
 		isLoading: (state) => state.loading,
 		error: (state) => state.error

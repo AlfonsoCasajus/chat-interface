@@ -1,5 +1,18 @@
 <template>
-	<div v-if="conversation && firstMessageSended && lastMessageSended" class="flex items-center p-4 border-b border-gray-200 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700/95 transition dark:border-gray-700 dark:bg-gray-800">
+	<div v-if="conversation && firstMessageSended && lastMessageSended"
+		:class="[
+			'flex',
+			'items-center',
+			'p-4',
+			'border-b',
+			'border-gray-200',
+			'cursor-pointer',
+			'hover:bg-gray-100',
+			'dark:hover:bg-gray-700/95',
+			'dark:border-gray-700',
+			'dark:bg-gray-800',
+			{ 'bg-gray-300': selected }
+		]">
 	  <Avatar :image-url="conversation.customer.photo" :name="`${conversation.customer.firstname} ${conversation.customer.lastName}`" size="large" class="mr-4" />
 	  <div class="flex flex-col flex-grow">
 		<p class="font-semibold dark:text-gray-300">{{ conversation.customer.firstname }}</p>
@@ -22,6 +35,11 @@ import Avatar from './utils/Avatar.vue';
     conversation: {
       type: Object,
       required: true
+    },
+    selected: {
+      type: Boolean,
+      required: false,
+	  default: false
     },
   })
 

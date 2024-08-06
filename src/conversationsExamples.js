@@ -1,10 +1,9 @@
 export default [{
-	uuid: '87171f25-cd92-41f5-9eb9-bd693d2e74a6',
 	sector: 'Devolución',
-	agent: 'Alfonso',
+	agent: 'Alfonso Casajus',
 	messages: [
 		{
-			sender: { name: 'Alfonso', type: 'agent' },
+			sender: { name: 'Alfonso Casajus', type: 'agent' },
 			message: 'Bienvenido!! ¿En que podemos ayudarte?',
 			time: '17:00'
 		},
@@ -19,7 +18,7 @@ export default [{
 			time: '17:23'
 		},
 		{
-			sender: { name: 'Alfonso', type: 'agent' },
+			sender: { name: 'Alfonso Casajus', type: 'agent' },
 			message: 'Claro, te pido una foto del producto y la factura de compra',
 			time: '17:25'
 		},
@@ -30,7 +29,6 @@ export default [{
 		}
 	]
 }, {
-	uuid: '52c68e5b-a7b3-482d-a773-dcaf846c5dba',
 	sector: 'Asistencia',
 	agent: 'Nicolás',
 	messages: [
@@ -71,7 +69,6 @@ export default [{
 		}
 	]
 }, {
-	uuid: '2cdcbb12-ba59-428a-b598-3e04fdab44f7',
 	sector: 'Asistencia',
 	agent: 'Lucia',
 	messages: [

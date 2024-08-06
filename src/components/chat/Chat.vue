@@ -13,12 +13,11 @@
         :show-avatar="conversation?.messages[index - 1]?.sender.type !== messageData.sender.type"
       />
     </div>
-    <MessageInput v-if="conversation" class="mt-2" :model-value="chatInput" />
+    <MessageInput v-if="conversation" class="mt-2" @send="(message) => $emit('send-message', { uuid: conversation.uuid, message })" />
 	</div>
   </template>
   
   <script setup>
-  import { ref } from "vue"
   import Message from './Message.vue';
   import MessageInput from "./MessageInput.vue";
 
@@ -29,8 +28,8 @@
       default: () => []
     }
   })
-  
-const chatInput = ref('')
+
+  defineEmits(['send-message'])
 
 </script>
 

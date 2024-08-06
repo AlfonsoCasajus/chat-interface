@@ -31,17 +31,22 @@ const toggleCustomerDetail = () => {
   isCustomerVisible.value = !isCustomerVisible.value;
 }
 
+const updateConversation = ({ uuid, message }) => {
+  if (!uuid || !message) return;
+  store.dispatch('conversations/updateConversation', { uuid, message });
+}
+
 </script>
 
 <template>
-  <div class="light h-screen flex flex-col">
+  <div class="h-screen flex flex-col">
     <NavBar />
     <div class="h-1 flex justify-between flex-grow max-lg:flex-col">
       <span :class="['min-w-[400px] max-lg:w-full w-1/4 overflow-y-auto h-full dark:bg-gray-800', { 'max-lg:hidden': selectedConversation }]">
         <Conversations :conversations="conversations" @select="selectConversation" />
       </span>
       <span :class="['h-full w-full', { 'max-lg:hidden': !selectedConversation || isCustomerVisible }]">
-        <Chat :conversation="selectedConversation">
+        <Chat :conversation="selectedConversation" @send-message="updateConversation">
           <template #top-toolbar>
             <div class="flex justify-between">
               <button

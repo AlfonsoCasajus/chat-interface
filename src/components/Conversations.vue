@@ -17,6 +17,7 @@
       <ConversationPreview v-for="(conversation, index) of filteredConversations"
       :key="index"
       :conversation="conversation"
+      :selected="conversation.uuid === selectedConvUuid"
       @click="$emit('select', conversation)"
       />
     </div>
@@ -67,6 +68,12 @@ const hasError = computed(() => {
 
 const isLoadingConversations = computed(() => {
 	return store.getters['conversations/isLoading'];
+})
+
+const selectedConvUuid = computed(() => {
+  const conv = store.getters['conversations/selectedConversation'];
+  if (!conv) return null;
+  return conv.uuid
 })
 
 const filterQuery = ref('')

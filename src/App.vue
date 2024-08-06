@@ -1,6 +1,7 @@
 <script setup>
 import { useStore } from 'vuex';
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, ref } from 'vue';
+import { IconArrowBack, IconUser } from '@tabler/icons-vue';
 
 // Components
 import Conversations from './components/Conversations.vue';
@@ -25,6 +26,11 @@ const selectConversation = (conversation) => {
   store.commit('conversations/selectConversation', conversation);
 }
 
+const isCustomerVisible = ref(false);
+const toggleCustomerDetail = () => {
+  isCustomerVisible.value = !isCustomerVisible.value;
+}
+
 </script>
 
 <template>
@@ -34,27 +40,32 @@ const selectConversation = (conversation) => {
       <span :class="['min-w-[400px] max-lg:w-full w-1/4 overflow-y-auto h-full dark:bg-gray-800', { 'max-lg:hidden': selectedConversation }]">
         <Conversations :conversations="conversations" @select="selectConversation" />
       </span>
-      <span :class="['h-full w-full', { 'max-lg:hidden': !selectedConversation }]">
+      <span :class="['h-full w-full', { 'max-lg:hidden': !selectedConversation || isCustomerVisible }]">
         <Chat :conversation="selectedConversation">
           <template #top-toolbar>
             <div class="flex justify-between">
               <button
-                class="px-4 py-2 bg-gray-200 rounded-md focus:outline-none" 
-                @click="() => selectConversation(null)" 
+                class="p-2 bg-gray-200 rounded-full focus:outline-none" 
                 aria-label="Volver a la conversación anterior" 
                 title="Atras"
+                @click="() => selectConversation(null)" 
               >
-                Atras
+                <IconArrowBack size="22"/>
               </button>
-              <button class="px-4 py-2 bg-gray-200 rounded-md focus:outline-none">
-                Customer
+              <button
+                class="p-2 bg-gray-200 rounded-md focus:outline-none"
+                aria-label="Mostrar/Ocultar información de cliente"
+                :title="isCustomerVisible ? 'Ocultar' : 'Mostrar'"
+                @click="toggleCustomerDetail"
+              >
+                <IconUser size="22"/>
               </button>
             </div>
           </template>
         </Chat>
       </span>
-      <span v-if="selectedConversation" class="w-1/6 h-full">
-        <CustomerDetail :conversation="selectedConversation" />
+      <span v-if="selectedConversation && isCustomerVisible" class="min-w-80 h-full max-lg:w-full">
+        <CustomerDetail :conversation="selectedConversation" @close="toggleCustomerDetail" />
       </span>
     </div>
   </div>

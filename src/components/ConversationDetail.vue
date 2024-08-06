@@ -1,5 +1,13 @@
 <template>
-	<div class="h-full bg-white shadow-md p-5 w-80 dark:bg-gray-800 dark:text-gray-300 text-gray-600">
+	<div class="h-full w-full bg-white shadow-md p-5 dark:bg-gray-800 dark:text-gray-300 text-gray-600">
+		<button
+			class="p-2 bg-gray-200 rounded-full focus:outline-none" 
+			aria-label="Cerrar detalle" 
+			title="Cerrar"
+			@click="$emit('close')"
+			>
+			<IconX size="22"/>
+		</button>
 		<div class="flex flex-col items-center mb-4">
 			<Avatar :image-url="conversation.customer.photo" :name="`${conversation.customer.firstname} ${conversation.customer.lastName}`" size="large" />
 			<h2 class="text-xl font-bold">{{ conversation.customer.firstname }} {{ conversation.customer.lastname }}</h2>
@@ -45,6 +53,7 @@
   
   <script setup>
 import Avatar from './utils/Avatar.vue';
+import { IconX } from '@tabler/icons-vue';
 
   const props = defineProps({
     conversation: {
@@ -52,14 +61,10 @@ import Avatar from './utils/Avatar.vue';
       required: true
     },
   })
+
+  defineEmits(['close'])
   
   </script>
   
   <style scoped>
-  .slide-enter-active, .slide-leave-active {
-	transition: transform 0.3s ease;
-  }
-  .slide-enter-from, .slide-leave-to {
-	transform: translateX(100%);
-  }
   </style>

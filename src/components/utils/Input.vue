@@ -4,8 +4,21 @@
 	  v-bind="$attrs"
 	  :value="modelValue"
 	  @input="handleInput"
-	  class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-	/>
+	  class="
+		w-full
+		px-4
+		py-2
+		border
+		border-gray-300
+		rounded-md
+		shadow-sm
+		focus:outline-none
+		focus:ring-2
+		focus:ring-indigo-500
+		dark:bg-slate-800
+		dark:border-slate-600
+		dark:text-white
+	"/>
   </template>
   
   <script setup>

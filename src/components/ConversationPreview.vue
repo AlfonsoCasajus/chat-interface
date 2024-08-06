@@ -11,7 +11,7 @@
 			'dark:hover:bg-gray-700/95',
 			'dark:border-gray-700',
 			'dark:bg-gray-800',
-			{ 'bg-gray-300': selected }
+			{ 'bg-gray-100': selected, 'dark:bg-gray-700/95': selected }
 		]">
 	  <Avatar :image-url="conversation.customer.photo" :name="`${conversation.customer.firstname} ${conversation.customer.lastName}`" size="large" class="mr-4" />
 	  <div class="flex flex-col flex-grow">

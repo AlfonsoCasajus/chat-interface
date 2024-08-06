@@ -1,5 +1,4 @@
 import axios from 'axios';
-
 import conversationsExamples from '../../conversationsExamples';
 
 const conversations = {
@@ -8,15 +7,16 @@ const conversations = {
 		conversations: [],
 		selectedConversation: null,
 		loading: false,
-		error: false
+		error: false,
+		customersPage: 1
 	}),
 	mutations: {
 		selectConversation(state, conversation) {
 			state.selectedConversation = conversation;
 		},
-		setConversations(state, conversations) {
+		addConversations(state, conversations) {
 			if (!Array.isArray(conversations)) state.conversations = [];
-			else state.conversations = conversations
+			else state.conversations.push(...conversations)
 		},
 		setLoading(state, loading) {
 			state.loading = loading;
@@ -24,15 +24,20 @@ const conversations = {
 		setError(state, error) {
 			state.error = error;
 		},
+		setCustomersPagination(state, page) {
+			state.customersPage = page;
+		}
 	},
 	actions: {
-		async fetchCustomers({ commit }) {
+		async fetchCustomers({ commit, getters }) {
 			const BASE_URL = import.meta.env.VITE_GROWLAT_BASE_URL;
 			const AUTH = import.meta.env.VITE_GROWLAT_AUTH;
 
+			
+			commit('setError', false)
 			commit('setLoading', true)
 			try {
-				const response = await axios.get(`${BASE_URL}/customers`, {
+				const response = await axios.get(`${BASE_URL}/customers?page=${getters.customersPage}`, {
 					headers: {
 					  Authorization: AUTH
 					}
@@ -48,7 +53,8 @@ const conversations = {
 					const conversation = conversationsExamples[conversationIndex];
 	 
 					return {
-						uuid: `550e8400-e29b-1d4-a716-${index}4665544000`,
+						// uuid used to update messages and style selectedConversation
+						uuid: `55${getters.customersPage}e8400-e29b-1d4-a716-${index}4665544000`,
 						// Conversation example
 						// sector: 'Devolución',
 						// agent: 'Alfonso Casajus',
@@ -70,7 +76,8 @@ const conversations = {
 						})
 					}})
 				  
-				  commit('setConversations', conversations);
+				  commit('addConversations', conversations);
+				  commit('setCustomersPagination', getters.customersPage + 1);
 
 			} catch (error) {
 				console.error('Error al buscar customers: ', error);
@@ -93,15 +100,15 @@ const conversations = {
 				time: formattedTime
 			})
 			
-			commit('setConversations', conversations);
-
+			commit('addConversations', conversations);
 		}
 	},
 	getters: {
 		conversations: (state) => state.conversations,
 		selectedConversation: (state) => state.selectedConversation,
 		isLoading: (state) => state.loading,
-		error: (state) => state.error
+		error: (state) => state.error,
+		customersPage: (state) => state.customersPage,
 	}
 }
 

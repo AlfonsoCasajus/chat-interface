@@ -13,7 +13,7 @@ const store = useStore()
 
 onMounted(() => {
   fetchCustomers();
-})
+});
 
 const fetchCustomers = () => {
   store.dispatch('conversations/fetchCustomers');
@@ -36,13 +36,24 @@ const updateConversation = ({ uuid, message }) => {
   store.dispatch('conversations/updateConversation', { uuid, message });
 }
 
+const handleScroll = (event) => {
+  const element = event.target;
+  if (element.scrollHeight - element.scrollTop === element.clientHeight) {
+    fetchCustomers();
+  }
+}
+
 </script>
 
 <template>
   <div class="h-screen flex flex-col">
     <NavBar />
     <div class="h-1 flex justify-between flex-grow max-lg:flex-col">
-      <span :class="['min-w-[400px] max-lg:w-full w-1/4 overflow-y-auto h-full dark:bg-gray-800', { 'max-lg:hidden': selectedConversation }]">
+      <span
+        id="conversations-list"
+        :class="['min-w-[400px] max-lg:w-full w-1/4 overflow-y-auto h-full dark:bg-gray-800', { 'max-lg:hidden': selectedConversation }]"
+        @scroll="handleScroll"
+      >
         <Conversations :conversations="conversations" @select="selectConversation" />
       </span>
       <span :class="['h-full w-full', { 'max-lg:hidden': !selectedConversation || isCustomerVisible }]">

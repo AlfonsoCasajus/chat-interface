@@ -1,5 +1,5 @@
 <template>
-	<div class="border-r dark:bg-gray-800">
+	<div class="border-r">
 	  <ConversationPreview v-for="(conversation, index) of conversations"
       :key="index"
       :conversation="conversation"

@@ -1,24 +1,55 @@
 <template>
-	<div class="flex">
-		<Avatar name="Alfonso" size="small" class="mr-1" />
-		<div class="flex items-start p-2 rounded-md bg-slate-500 text-gray-700">
+	<div :class="['flex', { 'flex-row-reverse': isAgentSender }]">
+		<Avatar name="Alfonso" size="small" :class="[`${isAgentSender ? 'ml' : 'mr'}-1`]" />
+		<div :class="[`
+			flex
+			flex-col
+			items-start
+			p-2
+			rounded-md
+			text-gray-700,
+			${isAgentSender ? 'bg-teal-900' : 'bg-white'}
+			${isAgentSender ? 'dark:bg-teal-900' : 'dark:bg-slate-700'}
+		`]">
 		  <div class="flex-grow">
-			<p class="text-white dark:text-gray-100">{{ message }}</p>
+			<p :class="[`
+				${isAgentSender ? 'text-gray-100' : 'text-gray-800'}
+				${isAgentSender ? 'dark:text-gray-100' : 'dark:text-gray-100'}
+			`]">{{ message }}</p>
 		  </div>
 		  <div class="ml-4">
-			<time class="text-white dark:text-gray-400 text-xs">{{ time }}</time>
+			<time :class="[`
+				${isAgentSender ? 'text-gray-100' : 'text-gray-800'}
+				${isAgentSender ? 'dark:text-gray-100' : 'dark:text-gray-100'}
+			`]">{{ time }}</time>
 		  </div>
 		</div>
 	</div>
   </template>
   
   <script setup>
+  import { computed } from 'vue';
 import Avatar from '../utils/Avatar.vue';
 
-defineProps({
-    message: String,
-    time: String
+const props = defineProps({
+	message: {
+	  type: String,
+	  required: true
+	},
+	time: {
+	  type: String,
+	  required: true
+	},
+	sender: {
+	  type: String,
+	  required: true
+	}
 })
-  </script>
+
+const isAgentSender = computed(() => {
+	return props.sender === 'agent';
+})
+
+</script>
   
   <style scoped></style>

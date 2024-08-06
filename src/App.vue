@@ -31,11 +31,11 @@ const selectConversation = (conversation) => {
   <div class="light h-screen flex flex-col">
     <NavBar />
     <div class="h-1 flex justify-between flex-grow">
-      <span class="min-w-[400px] w-1/4 overflow-y-auto h-full">
+      <span class="min-w-[400px] w-1/4 overflow-y-auto h-full dark:bg-gray-800">
         <Conversations :conversations="conversations" @select="selectConversation" />
       </span>
       <span class="h-full w-full">
-        <Chat />
+        <Chat :messages="selectedConversation?.messages ? selectedConversation?.messages : [] " />
       </span>
       <span v-if="selectedConversation" class="w-1/6 h-full">
         <CustomerDetail :conversation="selectedConversation" />

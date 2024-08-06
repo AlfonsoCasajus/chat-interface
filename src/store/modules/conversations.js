@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-const sectors = ['Devolución', 'Consulta', 'Asistencia', 'General']
-const agents = ['Alfonso', 'Nicolás', 'Lucia', 'Adrian']
+import conversationsExamples from '../../conversationsExamples';
 
 const conversations = {
 	namespaced: true,
@@ -47,12 +46,11 @@ const conversations = {
 	getters: {
 		conversations: (state) => {
 			return state.customers.map(customer => {
+				const conversation = conversationsExamples[Math.floor(Math.random() * 3) + 1];
+
 				return {
+					...conversation,
 					customer,
-					sector: sectors[Math.floor(Math.random() * sectors.length - 1) + 1],
-					agent: agents[Math.floor(Math.random() * (agents.length - 1)) + 1],
-					lastMessage: 'Último mensaje enviado por uno de los',
-					lastMessageTime: 'Hace 10 minutos'
 				}
 			})
 		},

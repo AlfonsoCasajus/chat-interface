@@ -1,7 +1,7 @@
 <template>
 	<div class="h-full bg-white shadow-md p-5 w-80 dark:bg-gray-800 dark:text-gray-300 text-gray-600">
 		<div class="flex flex-col items-center mb-4">
-			<img class="w-24 h-24 rounded-full mb-4" :src="conversation.customer.photo" alt="Customer Avatar">
+			<Avatar :image-url="conversation.customer.photo" :name="`${conversation.customer.firstname} ${conversation.customer.lastName}`" size="large" />
 			<h2 class="text-xl font-bold">{{ conversation.customer.firstname }} {{ conversation.customer.lastname }}</h2>
 		</div>
 		<div class="pt-2 pb-2 border-b dark:border-gray-700">
@@ -44,6 +44,7 @@
   </template>
   
   <script setup>
+import Avatar from './utils/Avatar.vue';
 
   const props = defineProps({
     conversation: {

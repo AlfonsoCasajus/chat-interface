@@ -9,12 +9,6 @@
 			placeholder="Escribe un mensaje..."
 		/>
 		<button
-			@click="addFile"
-			class="ml-2 px-4 py-2 text-white bg-blue-500 hover:bg-blue-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-		>
-			<IconPaperclip size="26" />
-		</button>
-		<button
 			@click="sendMessage"
 			:disabled="!chatInput"
 			class="ml-2 px-4 py-2 text-white bg-green-500 hover:bg-green-600 rounded-md focus:outline-none focus:ring-2 disabled:opacity-40 disabled:focus:none"
@@ -33,11 +27,7 @@ const props = defineProps({
 	modelValue: String
 });
 
-const emit = defineEmits(["send", "add-file"]);
-
-const addFile = () => {
-	emit("add-file");
-};
+const emit = defineEmits(["send"]);
 
 const chatInput = ref("");
 const sendMessage = () => {

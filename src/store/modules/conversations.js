@@ -30,18 +30,10 @@ const conversations = {
 	},
 	actions: {
 		async fetchCustomers({ commit, getters }) {
-			const BASE_URL = import.meta.env.VITE_GROWLAT_BASE_URL;
-			const AUTH = import.meta.env.VITE_GROWLAT_AUTH;
-
-			
 			commit('setError', false)
 			commit('setLoading', true)
 			try {
-				const response = await axios.get(`${BASE_URL}/customers?page=${getters.customersPage}`, {
-					headers: {
-					  Authorization: AUTH
-					}
-				  });
+				const response = await axios.get(`/customers?page=${getters.customersPage}`);
 
 				  const customers = response.data.data;
 
